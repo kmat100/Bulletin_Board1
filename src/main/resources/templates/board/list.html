@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--<title>배경</title>-->
+<!--    <style>-->
+<!--        div{width:500px; height: 300px;-->
+<!--        background-color: #0a53be;-->
+<!--        border: 1px groove #101214; border-radius: 1px}-->
+<!--    </style>-->
+
+    <link rel="stylesheet" th:href="@{/css/board.css}">
+<!--    앞에서 작성한 board.css를 불러오는 코드-->
+</head>
+<body>
+<!-- HEADER -->
+<div th:insert="common/header.html" id="header"></div>
+
+<a th:href="@{/post}">글쓰기</a>
+
+<table>
+    <thead>
+    <tr>
+        <th class="one wide">번호</th>
+        <th class="ten wide">글제목</th>
+        <th class="two wide">작성자</th>
+        <th class="three wide">작성일</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <!-- CONTENTS !-->
+    <tr th:each="board : ${boardList}">
+<!--        boardList 는 컨트롤러가 넘겨주는 변수이며, 원소는 board 변수로 사용하여 각 속성을 사용-->
+        <td>
+            <span th:text="${board.id}"></span>
+        </td>
+        <td>
+            <a th:href="@{'/post/' + ${board.id}}">
+                <span th:text="${board.title}"></span>
+            </a>
+        </td>
+        <td>
+            <span th:text="${board.writer}"></span>
+        </td>
+        <td>
+            <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+<!--    페이징 번호를 리스트 pageList 변수에 받아와서 번호를 붙혀줌-->
+    <span th:each="pageNum : ${pageList}" th:inline="text">
+        <a th:href="@{'/?page=' + ${pageNum}}">[[${pageNum}]]</a>
+    </span>
+</div>
+
+<!-- 검색 form -->
+<form action="/board/search" method="GET">
+    <div>
+        <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+    </div>
+
+    <button>검색하기</button>
+</form>
+<!-- FOOTER -->
+<div th:insert="common/footer.html" id="footer"></div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form th:action="@{'/post/edit/' + ${boardDto.id}}" method="post">
+  <input type="hidden" name="_method" value="put"/>
+<!--  Restful API 작성을 위한 것으로, 컨트롤러에서 put 메서드로 매핑-->
+  <input type="hidden" name="id" th:value="${boardDto.id}"/>
+<!--  hidden 타입을 게시글 id 값을 넘겨준 이유는 JPA(BoardRepository.save())에서 insert 와 update 를 같은 메서드로 사용하기 때문-->
+
+  제목 : <input type="text" name="title" th:value="${boardDto.title}"> <br>
+  작성자 : <input type="text" name="writer" th:value="${boardDto.writer}"> <br>
+  <textarea name="content" th:text="${boardDto.content}"></textarea><br>
+
+  <input type="submit" value="수정">
+</form>
+</body>
+</html>

@@ -1,24 +1,29 @@
 spring:
   devtools:
     livereload:
-      enabled: true
-
-  freemarker:
+      enable: true
+    freemarker:
       cache: false
+
+  mvc:
+   hiddenmethod:
+     filter:
+       enabled: true
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bulletin_board1?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/bulletin_board1?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: dlckdals1
 
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    open-in-view: false
-    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect #jpa 데이터 베이스 플랫폼을 지정, MySQL InnoDB를 설정
+    open-in-view: false # OSIV(open Session In View)는 웹 요청이 완료될때 까지 동일한 EntityManager를 갖도록 해준다
+    show-sql: true # 콘솔에 JPA 실행 쿼리 출력
     hibernate:
-      format_sql: true
-      ddl-auto: create
+      format_sql: true # 콘솔에 출력되는 JPA 실행 쿼리를 가독성 있게 표현해준다
+      ddl-auto: update # 데이터베이스 초기화 전략을 설정, create 로 하면 서버 재시작시 리셋
 
     logging:
       level:
@@ -29,3 +34,7 @@ spring:
               descriptor:
                 sql:
                   BasicBinder: TRACE
+  thymeleaf:
+    suffix: .html
+    check-template-location: true
+    prefix: classpath:/templates/
